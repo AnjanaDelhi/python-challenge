@@ -9,10 +9,10 @@ file_path = os.path.join("PyBank", "Resources", "budget_data.csv")
 total_months = 0
 net_total = 0
 last_profit = 0
-profit_change = 0
-average_change = []
+total_profit_change = []
 increase = ['', 0]
 decrease = ['', 999999999999999999]
+
 
 # Read the file using csv module and storing the contents as "csvfile"
 with open(file_path) as csvfile:
@@ -38,14 +38,8 @@ with open(file_path) as csvfile:
 
         #Resetting the last_profit to the current month
         last_profit = profit
-
-        #Adding the values to the profit_change list to calculate the average 
-        profit_change.append(profit)
-
-        # Calculating the average
-        # average_change = round((net_total/total_months), 2)
-        average_change = sum(profit_change)/len(profit_change)
         
+
         if (profit_change > increase[1]):
             # Greatest increase value
             increase[1] = profit_change
@@ -58,6 +52,19 @@ with open(file_path) as csvfile:
             # Greatest increase month
             decrease[0] = row[0]
         
+
+#Adding the values to the profit_change list to calculate the average 
+        if profit_change != profit:
+            total_profit_change.append(profit_change)
+
+    #print(total_profit_change)
+    #print(len(total_profit_change))
+
+# Calculating the average
+#average_change = round((net_total/total_months), 2)
+average_change = round((sum(total_profit_change)/len(total_profit_change)), 2)
+        
+                
 print("Financial Analysis")
 print("-------------------------------")
 print(f"Total Months: {total_months}")
